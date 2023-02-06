@@ -32,7 +32,7 @@ function App() {
     const str = document.getElementById("string").value.toLowerCase();
     setMainWord(str);
 
-    const closestWordSet = new Set();
+    const closestWordArr = [];
     for (let word of words) {
       const getDist = calcDistance(str, word);
       if (getDist === 0) {
@@ -41,14 +41,16 @@ function App() {
       }
 
       if (getDist === 1) {
-        closestWordSet.add(word);
+        if (!closestWordArr.includes(word)) {
+          closestWordArr.push(word);
+        }
       }
       const getAnagram = isAnagram(str, word);
       if (getAnagram) {
-        closestWordSet.add(word);
+        closestWordArr.push(word);
       }
     }
-    const closestWordArr = new Array(closestWordSet);
+    // const closestWordArr = new Array(closestWordSet);
     setCloseWord(closestWordArr);
     document.getElementById("string").value = "";
     return;
