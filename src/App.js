@@ -16,6 +16,7 @@ function App() {
   const [words, setWords] = useState([]);
   const [mainWord, setMainWord] = useState("");
   const [clicked, setClicked] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const getWordsArr = async () => {
@@ -31,6 +32,13 @@ function App() {
     setCloseWord([]);
     const str = document.getElementById("string").value.toLowerCase();
     setMainWord(str);
+
+    //check if string is pure string ^[a-zA-Z]+$
+    const reg = /^[a-zA-Z]+$/;
+    if (!str.match(reg)) {
+      setErrorMessage("Only Letters Allowed");
+      return;
+    }
 
     const closestWordArr = [];
     for (let word of words) {
@@ -126,6 +134,8 @@ function App() {
               </List>{" "}
             </Box>
           </>
+        ) : errorMessage ? (
+          <h1>{errorMessage}</h1>
         ) : (
           <h1>No Words Found</h1>
         )
